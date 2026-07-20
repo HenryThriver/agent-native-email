@@ -32,8 +32,8 @@ Publishing early is allowed; overstating what is automated is not.
 - [ ] Henry voice-pass the essay
 - [ ] Publish the essay and add its callout to the quest page
 
-These unchecked publication-surface items are the only remaining blockers to
-sharing the experimental release cleanly.
+The repository and agent launcher are shareable now. The unchecked items above
+are the remaining work for the full essay-and-quest publication surface.
 
 ## Stable v1 hardening
 

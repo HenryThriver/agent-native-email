@@ -1,6 +1,6 @@
 # Agent-Native Email Public Handoff
 
-> Experimental release candidate. It is designed for transparent, supported
+> Experimental public release. It is designed for transparent, supported
 > early use, not unattended business-critical migration.
 
 This folder packages the proven Agent-Native Comms mail build into a public,
@@ -40,6 +40,10 @@ that none of those identifiers survived extraction.
 
 Current version: `0.1.0-experimental`.
 
+- [Public repository](https://github.com/HenryThriver/agent-native-email)
+- [Immutable agent guide](https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.0-experimental/agent-native-email.md)
+- [Tagged release and starter archive](https://github.com/HenryThriver/agent-native-email/releases/tag/v0.1.0-experimental)
+
 Henry has accepted an early-publication posture: sharing is not blocked on two
 additional rehearsals because the underlying live system has already exercised
 the architecture. The public package must be explicit about what remains
@@ -52,5 +56,3 @@ Required before stable `v1`:
 2. Run a disposable fresh-domain rehearsal.
 3. Run a migration-shaped rehearsal with rollback.
 4. Obtain an independent security and beginner-UX review.
-5. Publish the starter as a versioned release and replace draft source paths in
-   the agent guide with immutable public URLs and checksums.
