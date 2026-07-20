@@ -23,10 +23,10 @@ Publishing early is allowed; overstating what is automated is not.
 
 - [x] Create public `HenryThriver/agent-native-email` repository
 - [x] Run public-tree and Git-history secret scans before first push
-- [ ] Tag immutable `v0.1.0-experimental` and publish its archive checksum
+- [x] Tag immutable `v0.1.0-experimental` and publish its archive checksum
 - [x] Replace local starter source and pending checksum in the guide
-- [ ] Host the versioned raw guide without JavaScript or authentication
-- [ ] Fetch the public guide URL outside the signed-in website session and
+- [x] Host the versioned raw guide without JavaScript or authentication
+- [x] Fetch the public guide URL outside the signed-in website session and
       confirm it returns the intended plain Markdown
 - [x] Draft the human handoff essay with the copy-paste launcher
 - [ ] Henry voice-pass the essay
