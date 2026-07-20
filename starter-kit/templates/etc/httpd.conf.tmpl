@@ -1,0 +1,48 @@
+# HTTP serves ACME only; HTTPS serves the Roundcube webmail client.
+server "__MAIL_HOST__" {
+	listen on * port 80
+	location "/.well-known/acme-challenge/*" {
+		root "/acme"
+		request strip 2
+	}
+	location "*" {
+		block return 301 "https://__MAIL_HOST__$REQUEST_URI"
+	}
+}
+
+server "__MAIL_HOST__" {
+	listen on * tls port 443
+	tls {
+		certificate "/etc/ssl/__MAIL_HOST__.fullchain.pem"
+		key "/etc/ssl/private/__MAIL_HOST__.key"
+	}
+	hsts max-age 31536000
+	root "/roundcubemail/public_html"
+	directory index index.php
+
+	location "/webmail" {
+		block return 301 "/webmail/"
+	}
+	location "/webmail/config/*" {
+		block return 404
+	}
+	location "/webmail/temp/*" {
+		block return 404
+	}
+	location "/webmail/logs/*" {
+		block return 404
+	}
+	location "/webmail/installer*" {
+		block return 404
+	}
+	location "/webmail/*.php" {
+		request strip 1
+		fastcgi socket "/run/php-fpm.sock"
+	}
+	location "/webmail/*" {
+		request strip 1
+	}
+	location "*" {
+		block return 404
+	}
+}

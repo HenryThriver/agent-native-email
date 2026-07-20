@@ -1,0 +1,30 @@
+<?php
+
+// Roundcube uses the existing Dovecot mailbox and authenticated OpenSMTPD
+// submission path. The per-installation DES key is generated on the server.
+$config = [];
+$config['db_dsnw'] = 'sqlite:////roundcubemail/db/sqlite.db?mode=0660';
+$config['imap_host'] = 'ssl://127.0.0.1:993';
+$config['smtp_host'] = 'tls://127.0.0.1:587';
+$config['smtp_user'] = '%u';
+$config['smtp_pass'] = '%p';
+$config['product_name'] = '__DOMAIN__ Mail';
+$config['skin'] = 'elastic';
+$config['session_lifetime'] = 30;
+$config['login_autocomplete'] = 0;
+$config['enable_installer'] = false;
+$des_key = trim((string) file_get_contents('/roundcubemail/config/.des_key'));
+if (strlen($des_key) !== 24) {
+    throw new RuntimeException('Roundcube DES key must be exactly 24 characters');
+}
+$config['des_key'] = $des_key;
+
+// Loopback TLS protects the connection; its certificate names the public host,
+// not 127.0.0.1. These exceptions apply only to the local loopback hop.
+$config['imap_conn_options'] = [
+    'ssl' => ['verify_peer' => false, 'verify_peer_name' => false],
+];
+$config['smtp_conn_options'] = [
+    'ssl' => ['verify_peer' => false, 'verify_peer_name' => false],
+];
+

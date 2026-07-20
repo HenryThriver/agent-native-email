@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "human_approved": false,
+  "port25_egress": false,
+  "ptr_fcrdns": false,
+  "spf_aligned": false,
+  "dkim_aligned": false,
+  "dmarc_aligned": false,
+  "deliverability_passed": false,
+  "rollback_relay_ready": false
+}

@@ -1,0 +1,10 @@
+config/public.env
+config/secrets.env.tpl
+rendered/
+state/build-ledger.json
+state/*.tmp
+evidence/private/
+*.key
+*.pem
+secrets
+

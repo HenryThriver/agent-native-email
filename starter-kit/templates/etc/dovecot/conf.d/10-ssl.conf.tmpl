@@ -1,0 +1,5 @@
+# Replace the package placeholder paths: Dovecot resolves these includes while
+# parsing, before local overrides can rescue a missing file.
+ssl_cert = </etc/ssl/__MAIL_HOST__.fullchain.pem
+ssl_key = </etc/ssl/private/__MAIL_HOST__.key
+

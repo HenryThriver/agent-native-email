@@ -1,0 +1,44 @@
+# General root access stays password-gated. Exact nopass rules below are the
+# only unattended production authority. OpenBSD doas is last-match-wins.
+permit __MAIL_USER__ as root
+
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/acme-client.conf /etc/acme-client.conf
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/doas.conf /etc/doas.conf
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/httpd.conf /etc/httpd.conf
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/pf.conf /etc/pf.conf
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/mail/. /etc/mail/
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/dovecot/. /etc/dovecot/
+permit nopass __MAIL_USER__ as root cmd /bin/cp args -R /home/__MAIL_USER__/etc-staging/ssh/. /etc/ssh/
+permit nopass __MAIL_USER__ as root cmd /sbin/pfctl args -f /etc/pf.conf
+
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/chown args -R root:wheel /etc/doas.conf /etc/pf.conf /etc/httpd.conf /etc/acme-client.conf /etc/mail /etc/dovecot /etc/ssh
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/chown args -R _dkimsign /etc/mail/dkim
+
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/smtpd args -n -f /home/__MAIL_USER__/etc-staging/mail/smtpd.conf
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/smtpd args -n -f /home/__MAIL_USER__/etc-staging/smtpd.conf.alias-check
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/httpd args -n -f /home/__MAIL_USER__/etc-staging/httpd.conf
+permit nopass __MAIL_USER__ as root cmd /sbin/pfctl args -nf /home/__MAIL_USER__/etc-staging/pf.conf
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/smtpd args -n
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/httpd args -n
+permit nopass __MAIL_USER__ as root cmd /sbin/pfctl args -nf /etc/pf.conf
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args restart smtpd
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args restart dovecot
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args restart httpd
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args check smtpd dovecot httpd
+permit nopass __MAIL_USER__ as root cmd /usr/bin/tail args -n 200 /var/log/maillog
+
+permit nopass __MAIL_USER__ as root cmd /usr/bin/install args -m 640 -o root -g _smtpd /dev/null /etc/mail/secrets.new
+permit nopass __MAIL_USER__ as root cmd /usr/bin/tee args /etc/mail/secrets.new
+permit nopass __MAIL_USER__ as root cmd /bin/sha256 args -q /etc/mail/secrets.new
+permit nopass __MAIL_USER__ as root cmd /bin/mv args -f /etc/mail/secrets.new /etc/mail/secrets
+permit nopass __MAIL_USER__ as root cmd /bin/rm args -f /etc/mail/secrets.new
+permit nopass __MAIL_USER__ as root cmd /bin/chmod args 640 /etc/mail/secrets
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/chown args root:_smtpd /etc/mail/secrets
+
+permit nopass __MAIL_USER__ as root cmd /bin/cp args /home/__MAIL_USER__/etc-staging/aliases.merged /etc/mail/aliases.new
+permit nopass __MAIL_USER__ as root cmd /bin/chmod args 644 /etc/mail/aliases.new
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/chown args root:wheel /etc/mail/aliases.new
+permit nopass __MAIL_USER__ as root cmd /bin/mv args -f /etc/mail/aliases.new /etc/mail/aliases
+
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/acme-client args -v __MAIL_HOST__
+

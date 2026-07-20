@@ -1,0 +1,6 @@
+# Default deny inbound. HTTPS serves the included webmail client.
+set skip on lo
+block return
+pass out
+pass in proto icmp
+pass in proto tcp to port { 22 25 80 443 587 993 }

@@ -1,0 +1,10 @@
+authority letsencrypt {
+	api url "https://acme-v02.api.letsencrypt.org/directory"
+	account key "/etc/acme/letsencrypt-privkey.pem"
+}
+domain __MAIL_HOST__ {
+	domain key "/etc/ssl/private/__MAIL_HOST__.key"
+	domain full chain certificate "/etc/ssl/__MAIL_HOST__.fullchain.pem"
+	sign with letsencrypt
+}
+

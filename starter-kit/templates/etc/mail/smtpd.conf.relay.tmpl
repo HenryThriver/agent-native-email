@@ -1,0 +1,20 @@
+# Guaranteed outbound path. Submission is signed locally before SMTP2GO relay.
+pki mail cert "/etc/ssl/__MAIL_HOST__.fullchain.pem"
+pki mail key "/etc/ssl/private/__MAIL_HOST__.key"
+
+table aliases file:/etc/mail/aliases
+table secrets file:/etc/mail/secrets
+
+filter "dkim" proc-exec "/usr/local/libexec/smtpd/filter-dkimsign -d __DOMAIN__ -s __DKIM_SELECTOR__ -a rsa-sha256 -k /etc/mail/dkim/__DOMAIN__.key" user _dkimsign group _dkimsign
+
+listen on all tls pki mail hostname "__MAIL_HOST__"
+listen on all port submission tls-require pki mail hostname "__MAIL_HOST__" auth filter "dkim"
+
+action "local_mail" maildir junk alias <aliases>
+action "outbound" relay host smtp+tls://smtp2go@__RELAY_HOST__:__RELAY_PORT__ auth <secrets> helo "__MAIL_HOST__"
+
+match from any for domain "__DOMAIN__" action "local_mail"
+match from any for domain "__MAIL_HOST__" action "local_mail"
+match for local action "local_mail"
+match auth from any for any action "outbound"
+
