@@ -16,6 +16,16 @@ beginner-safe handoff:
 - `LICENSE` — MIT license for reuse and adaptation.
 - `CHANGELOG.md` — release-level changes.
 
+## Start here
+
+Give your coding agent the immutable
+[`v0.1.0-experimental` guide](https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.0-experimental/agent-native-email.md)
+and tell it to begin in `PREFLIGHT` mode. Read the experimental boundary before
+approving any paid resource, DNS change, deployment, or migration.
+
+The matching starter archive and checksum are pinned in the guide. Questions
+and safe bug reports follow [SUPPORT.md](SUPPORT.md).
+
 The reference build requires an owned domain with registrar and DNS control. It
 includes Roundcube webmail and working outbound from launch: SMTP2GO is the
 initial/fallback route, while direct-to-MX becomes preferred only after its

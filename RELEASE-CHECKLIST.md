@@ -21,10 +21,10 @@ Publishing early is allowed; overstating what is automated is not.
 
 ### Publication surface
 
-- [ ] Create public `HenryThriver/agent-native-email` repository
-- [ ] Run public-tree and Git-history secret scans before first push
+- [x] Create public `HenryThriver/agent-native-email` repository
+- [x] Run public-tree and Git-history secret scans before first push
 - [ ] Tag immutable `v0.1.0-experimental` and publish its archive checksum
-- [ ] Replace local starter source and pending checksum in the guide
+- [x] Replace local starter source and pending checksum in the guide
 - [ ] Host the versioned raw guide without JavaScript or authentication
 - [ ] Fetch the public guide URL outside the signed-in website session and
       confirm it returns the intended plain Markdown
