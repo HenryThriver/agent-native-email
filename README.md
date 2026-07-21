@@ -1,58 +1,101 @@
-# Agent-Native Email Public Handoff
+# Agent-Native Email
 
-> Experimental public release. It is designed for transparent, supported
-> early use, not unattended business-critical migration.
+Self-hosted email, built by your coding agent, approved by you at every gate.
 
-This folder packages the proven Agent-Native Comms mail build into a public,
-beginner-safe handoff:
+I built my own mail server without knowing how email servers work. Three days
+in, my domain was receiving mail on a tiny OpenBSD box I control and sending
+properly authenticated mail through a relay. Soon after: webmail, a local
+searchable mirror, a tested restore path, and a propose-only agent sorting new
+messages into a daily brief. (I still can't explain DKIM without a cheat
+sheet. The server doesn't mind.)
 
-- `agent-native-email.md` — the single file a human gives to an agent.
-- `starter-kit/` — sanitized, testable infrastructure primitives used by that
-  file.
-- `STARTER-KIT-CONTRACT.md` — the boundary between the guide and starter.
-- `RELEASE-CHECKLIST.md` — the small experimental publish bar and the separate
-  stable-v1 hardening backlog.
-- `SUPPORT.md` — best-effort help and safe support-request format.
-- `LICENSE` — MIT license for reuse and adaptation.
-- `CHANGELOG.md` — release-level changes.
+I didn't become an infrastructure engineer to get there. I learned how to give
+an agent enough context, authority, tests, and stopping rules to build it with
+me. This repo is that handoff, packaged so your agent can do the same for you.
 
-## Start here
+It's one artifact of my [agent-native email quest](https://thrivinghenry.com/quests/agent-native-email),
+a build-in-public project at [ThrivingHenry](https://thrivinghenry.com). The
+[intro essay](https://thrivinghenry.com/writing/agent-native-email) has the
+story and the why.
 
-Give your coding agent the immutable
-[`v0.1.0-experimental` guide](https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.0-experimental/agent-native-email.md)
-and tell it to begin in `PREFLIGHT` mode. Read the experimental boundary before
-approving any paid resource, DNS change, deployment, or migration.
+## Just run this
 
-The matching starter archive and checksum are pinned in the guide. Questions
-and safe bug reports follow [SUPPORT.md](SUPPORT.md).
+Copy the prompt below into Claude Code, Codex, or any capable coding agent.
 
-The reference build requires an owned domain with registrar and DNS control. It
-includes Roundcube webmail and working outbound from launch: SMTP2GO is the
-initial/fallback route, while direct-to-MX becomes preferred only after its
-explicit deliverability and rollback gates pass.
+> Help me build agent-native, self-hosted email. Read
+> https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.0-experimental/agent-native-email.md
+> and start in PREFLIGHT mode. This is an experimental guide. Do not change
+> anything, create paid resources, or ask me to paste secrets into chat until
+> you have inspected what you safely can and shown me the architecture, cost,
+> risks, support boundary, and exact approval gates. Confirm that I own and
+> control a domain before beginning infrastructure work. Then follow the guide
+> phase by phase, preserve receipts, and stop at every named human gate.
 
-The private `th-mail-server` repository is evidence, not a publishable template.
-It contains personal DNS records, provider IDs, domain keys, and assumptions
-from a live system. Public artifacts must be generated independently and prove
-that none of those identifiers survived extraction.
+You answer at most eight questions up front. Your agent then works toward a
+verified, ready-to-cut-over mailbox, showing exact prices before it creates
+anything billable. Nothing touches your DNS, sends mail, or spends money
+without your explicit approval.
 
-## Release state
+## What you end up with
 
-Current version: `0.1.0-experimental`.
+- a mail server you own: OpenSMTPD inbound, Dovecot IMAPS, a default-deny pf
+  firewall, acme-client TLS, and Roundcube webmail on a small OpenBSD VPS
+- outbound that works from day one: SMTP2GO relay first, direct-to-MX only
+  after its deliverability gates pass, with the relay kept ready as a tested
+  rollback
+- SPF, DKIM, and DMARC that actually align
+- a local Maildir mirror (mbsync + notmuch), ready for a propose-only inbox
+  agent with no ability to send
+- receipts, rollback plans, and a resumable ledger for every phase
 
-- [Public repository](https://github.com/HenryThriver/agent-native-email)
-- [Immutable agent guide](https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.0-experimental/agent-native-email.md)
-- [Tagged release and starter archive](https://github.com/HenryThriver/agent-native-email/releases/tag/v0.1.0-experimental)
+## What's in this repo
 
-Henry has accepted an early-publication posture: sharing is not blocked on two
-additional rehearsals because the underlying live system has already exercised
-the architecture. The public package must be explicit about what remains
-unpinned, preserve every human gate, and offer best-effort support. Stable v1
-keeps the higher automation and independent-review bar.
+| File | What it is |
+|---|---|
+| [`agent-native-email.md`](agent-native-email.md) | The single file your agent follows |
+| [`starter-kit/`](starter-kit/) | Tested configs, scripts, and templates the guide builds from |
+| [`STARTER-KIT-CONTRACT.md`](STARTER-KIT-CONTRACT.md) | The interface between guide and starter |
+| [`RELEASE-CHECKLIST.md`](RELEASE-CHECKLIST.md) | What experimental means, and the bar for stable v1 |
+| [`SUPPORT.md`](SUPPORT.md) | Best-effort help, and how to ask for it safely |
+| [`LICENSE`](LICENSE) | MIT |
 
-Required before stable `v1`:
+Everything here was extracted from the live system running my actual mailbox,
+then sanitized and re-tested. The starter's offline suite scans for leaked
+identifiers on every run, and I fingerprint-scanned the full git history
+before the first push.
 
-1. Complete provider adapters and offline tests.
-2. Run a disposable fresh-domain rehearsal.
-3. Run a migration-shaped rehearsal with rollback.
-4. Obtain an independent security and beginner-UX review.
+## Before you start
+
+You need a domain you own and control: registrar access, authoritative DNS,
+and a recovery channel that doesn't depend on the new mailbox. No domain yet?
+The guide runs a separate acquisition preflight before touching any
+infrastructure. The domain is the durable part of an email address -
+everything else is a swappable part (h/t [Derek Sivers](https://sive.rs/ti)).
+
+You'll also want about ten minutes for kickoff questions, plus a budget for a
+small VPS and a relay account. Exact prices appear at the first gate, before
+anything exists to pay for.
+
+## Experimental, and honest about it
+
+This is `v0.1.0-experimental`. The architecture runs my real email every day,
+and the starter passes its offline safety suite. What it hasn't had yet: a
+from-scratch replay by someone who isn't me.
+
+So, during the experimental period:
+
+- prefer a fresh or non-critical domain
+- keep your current provider until the new mailbox has earned your trust
+- expect your agent to stop at every named human gate - silence is not approval
+
+The [release checklist](RELEASE-CHECKLIST.md) tracks the road to stable v1:
+provider adapters, fresh-domain and migration rehearsals, and independent
+security review.
+
+## Follow the build
+
+The quest keeps going, and the next guides get written the same way this one
+was. [Follow along](https://thrivinghenry.com/quests/agent-native-email) or
+[join the newsletter](https://thrivinghenry.com/join).
+
+Let's get Thriving. ~h
