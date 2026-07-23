@@ -1,6 +1,6 @@
 ---
 guide: agent-native-email
-version: 0.1.1-experimental
+version: 0.1.2-experimental
 release_status: experimental
 last_verified: 2026-07-22
 reference_target: macOS + Cloudflare + Vultr/OpenBSD + SMTP2GO + 1Password
@@ -66,8 +66,10 @@ checkpoint:
 > reviewed rollback. The human approves production cutover, confirms normal
 > sending and receiving, then receives a runbook and tested restore path.
 
-Do not promise completion in a fixed number of hours. DNS, provider review,
-account verification, and migrations are external clocks.
+Do not promise completion in a fixed number of hours, and do not present
+invented elapsed-time or effort estimates. Name the external clocks — DNS
+propagation, provider verification and reviews, deliverability warm-up,
+migrations — as dependencies instead.
 
 ## Reference posture
 
@@ -151,13 +153,25 @@ Write after every phase. Never rely on chat history as project state.
    - independent recovery address/channel;
    - permission to create the specifically priced infrastructure and scoped
      credentials after showing them.
-5. Return a one-screen kickoff card: mode, architecture, cost, human tasks,
+   In the same grouped message, also ask how the build feels: excited, neutral,
+   or uneasy.
+5. Run the public-DNS inventory the moment the domain is named. Never park
+   discovery behind another conversational round, and add no clarification
+   rounds beyond the single grouped set unless a stop condition fires;
+   capability details the guide already covers (vault setup, client apps)
+   belong in their later phases, not in extra pre-gate questions.
+6. Return a one-screen kickoff card: mode, architecture, cost, human tasks,
    expected interruption, major risks, rollback, and gates.
-6. Wait for Gate A. Silence is not approval.
+7. Wait for Gate A. Silence is not approval. Request approval only after the
+   complete kickoff card is visible in the same message; never ask the human to
+   approve first and see the summary after.
 
-If the domain has working MX records, classify the job as `migration`. A
-migration cannot inherit fresh-setup timing or proceed without mailbox export,
-DNS export, rollback, and an agreed window.
+If the domain has MX records a human mailbox actually depends on, classify the
+job as `migration`. A migration cannot inherit fresh-setup timing or proceed
+without mailbox export, DNS export, rollback, and an agreed window.
+Registrar-default parking or email-forwarding records that the human confirms
+nothing depends on do not make the job a migration: classify it `fresh` and
+schedule their reviewed removal in the DNS plan.
 
 ## Agents
 
@@ -217,6 +231,7 @@ Checks:
 - Existing mail and unrelated DNS records are accounted for.
 - The harness can resume long work from files.
 - Cost, downtime, support boundary, and irreversible actions are visible.
+- The complete kickoff card was shown before Gate A approval was requested.
 
 Receipt: `evidence/00-preflight.md` with no secrets or personal message data.
 

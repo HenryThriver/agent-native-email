@@ -13,7 +13,7 @@ trap 'rm -f "$TMP"' EXIT HUP INT TERM
 NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 jq -n --arg now "$NOW" --arg mode "$MODE" '{
   schema_version: 1,
-  guide_version: "0.1.1-experimental",
+  guide_version: "0.1.2-experimental",
   mode: $mode,
   created_at: $now,
   updated_at: $now,

@@ -1,6 +1,6 @@
 # Starter-Kit Contract
 
-**Version:** 0.1.1-experimental  
+**Version:** 0.1.2-experimental  
 **Status:** Early public interface; human-supervised use only
 
 The public guide may rely only on the interfaces in this document. Personal

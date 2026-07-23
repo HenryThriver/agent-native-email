@@ -111,7 +111,7 @@ set -e
 [ "$DNSBL_STATUS" -eq 1 ] || fail "listed fixture was not listed"
 
 "$ROOT/scripts/init-ledger.sh" fresh "$SCRATCH/ledger.json" >/dev/null
-jq -e '.guide_version=="0.1.1-experimental" and .mode=="fresh" and (.phases|length)==8' "$SCRATCH/ledger.json" >/dev/null || fail "ledger schema invalid"
+jq -e '.guide_version=="0.1.2-experimental" and .mode=="fresh" and (.phases|length)==8' "$SCRATCH/ledger.json" >/dev/null || fail "ledger schema invalid"
 printf '%s\n' 'privacy-safe receipt' > "$SCRATCH/preflight.txt"
 "$ROOT/scripts/record-phase.sh" preflight completed "$SCRATCH/preflight.txt" "$SCRATCH/ledger.json" >/dev/null
 jq -e '.phases[] | select(.key=="preflight") | .status=="completed" and (.receipts|length)==1' "$SCRATCH/ledger.json" >/dev/null || fail "phase receipt missing"

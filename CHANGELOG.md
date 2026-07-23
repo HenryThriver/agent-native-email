@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.2-experimental — 2026-07-22
+
+Guide tightenings from the first scripted launcher dry run (a low-cost agent
+walked a simulated beginner from the public prompt to Gate A):
+
+- The kickoff card must be shown before Gate A approval is requested, with a
+  matching preflight check; approve-first-see-later is now explicitly banned.
+- No invented elapsed-time or effort estimates; external clocks are named as
+  dependencies instead.
+- DNS inventory runs the moment the domain is named, and extra pre-gate
+  clarification rounds beyond the single grouped question set are disallowed.
+- Registrar-default parking/forwarding records no longer force `migration`
+  classification once the human confirms nothing depends on them.
+- The gut check is asked with the grouped questions.
+
 ## 0.1.1-experimental — 2026-07-22
 
 - Made the guide fully standalone: the support boundary is now an absolute URL,
