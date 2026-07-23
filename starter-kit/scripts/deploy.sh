@@ -53,6 +53,7 @@ ssh "$HOST" '
 
   doas /usr/sbin/smtpd -n
   doas /usr/sbin/httpd -n
+  doas /usr/sbin/sshd -t
   doas /sbin/pfctl -nf /etc/pf.conf
   doas /sbin/pfctl -f /etc/pf.conf
   doas /usr/sbin/rcctl restart smtpd

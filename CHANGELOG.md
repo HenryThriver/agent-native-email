@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.1-experimental — 2026-07-22
+
+- Made the guide fully standalone: the support boundary is now an absolute URL,
+  and the starter archive is downloaded and checksum-verified during read-only
+  preflight instead of first being referenced mid-build.
+- Replaced the anonymous success receipt with a human-initiated celebration
+  email and newsletter invitation.
+- Added live sshd configuration validation to the deploy path, with matching
+  doas authority and regression checks.
+- Documented the operator-key authority boundary in the guide and starter
+  contract.
+- Release archives are now built with `git archive` so untracked working files
+  can never ship.
+
 ## 0.1.0-experimental — 2026-07-19
 
 - Extracted a sanitized OpenBSD mail starter from the working private system.

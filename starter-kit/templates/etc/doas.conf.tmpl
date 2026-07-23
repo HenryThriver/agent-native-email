@@ -20,6 +20,7 @@ permit nopass __MAIL_USER__ as root cmd /usr/sbin/httpd args -n -f /home/__MAIL_
 permit nopass __MAIL_USER__ as root cmd /sbin/pfctl args -nf /home/__MAIL_USER__/etc-staging/pf.conf
 permit nopass __MAIL_USER__ as root cmd /usr/sbin/smtpd args -n
 permit nopass __MAIL_USER__ as root cmd /usr/sbin/httpd args -n
+permit nopass __MAIL_USER__ as root cmd /usr/sbin/sshd args -t
 permit nopass __MAIL_USER__ as root cmd /sbin/pfctl args -nf /etc/pf.conf
 permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args restart smtpd
 permit nopass __MAIL_USER__ as root cmd /usr/sbin/rcctl args restart dovecot

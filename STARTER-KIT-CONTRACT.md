@@ -1,6 +1,6 @@
 # Starter-Kit Contract
 
-**Version:** 0.1.0-experimental  
+**Version:** 0.1.1-experimental  
 **Status:** Early public interface; human-supervised use only
 
 The public guide may rely only on the interfaces in this document. Personal
@@ -82,3 +82,8 @@ guide's human gates; it must preserve receipts and stop rather than guess.
     IP, provider ID, private key material, or vault name. Repository-level
     attribution and support files may contain the intentionally published author
     name and contact address; those are not starter configuration.
+12. Unattended deploy authority is explicit, not hidden: the doas template's
+    nopass rules are the operator key's full production authority, and they
+    include installing an updated doas policy during a deploy. Possession of
+    the operator SSH key must therefore be treated as root on the mail host.
+    Narrowing this authority is a stable-v1 work item.

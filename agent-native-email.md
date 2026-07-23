@@ -1,8 +1,8 @@
 ---
 guide: agent-native-email
-version: 0.1.0-experimental
+version: 0.1.1-experimental
 release_status: experimental
-last_verified: 2026-07-19
+last_verified: 2026-07-22
 reference_target: macOS + Cloudflare + Vultr/OpenBSD + SMTP2GO + 1Password
 starter_source: https://github.com/HenryThriver/agent-native-email/releases/download/v0.1.0-experimental/agent-native-email-starter-kit-v0.1.0-experimental.tar.gz
 starter_checksum: sha256:dc82ea657f8c9f44e13fa1df0e08132273eee26fe2f1b4163fd4d1ed4d306643
@@ -45,9 +45,17 @@ For any migration, preserve the old service and tested DNS rollback until the
 human confirms normal use. Stop when a provider action cannot be proven from
 current official documentation or observed behavior.
 
+Know one tradeoff you are accepting: unattended deploys mean the operator SSH
+key carries real root authority on the mail host through its scoped doas rules,
+including the ability to update doas policy itself during a deploy. Protect that
+key with a passphrase, and treat its possession as root on the mail host.
+Narrowing this authority further is a stable-v1 work item.
+
 This is open source, best effort, and offered without warranty. Never send a
 support request containing passwords, tokens, private keys, recovery codes, or
-private message content. See `SUPPORT.md` for the support boundary.
+private message content. See
+https://github.com/HenryThriver/agent-native-email/blob/main/SUPPORT.md for the
+support boundary.
 
 ## Desired outcome
 
@@ -184,12 +192,14 @@ Goal: determine whether this build is supported and safe to start.
 Actions:
 
 - Save this exact guide and its checksum as the first receipt.
-- Verify release status. When the guide points to a tagged starter checksum,
-  verify it; an absent or mismatched checksum must be disclosed before Gate A.
+- Download the starter archive pinned in the front matter and verify its
+  checksum. Downloading and verifying are read-only. An absent or mismatched
+  checksum must be disclosed before Gate A.
 - Verify owned-domain control and an independent recovery route before treating
   this as a supported build. Domain acquisition is a separate human-approved
   bootstrap, not an infrastructure phase.
-- Run `starter-kit/scripts/preflight.sh` and offline starter tests.
+- Unpack the verified archive, then run `starter-kit/scripts/preflight.sh` and
+  the offline starter tests.
 - Inventory public `NS`, `MX`, apex `TXT`, `_dmarc`, known DKIM selectors,
   `mail` host records, DNSSEC, and current TTLs using authoritative and at least
   two independent public resolvers.
@@ -250,7 +260,8 @@ Goal: create a tested, resumable private control plane.
 
 Actions:
 
-- Fetch the pinned starter release, verify its checksum, and save the receipt.
+- Copy the starter verified during preflight into the project and record its
+  checksum receipt; re-download and re-verify only if that copy is missing.
 - Initialize a private Git repository; a remote is recommended, not required.
 - Fill `config/public.env` and `config/secrets.env.tpl`.
 - Run `scripts/render-config.sh`; review the diff; run
@@ -519,8 +530,15 @@ Lead with the outcome. Include:
 6. security posture and remaining risks;
 7. exact next human action and maintenance date.
 
-After success, optionally offer two transparent choices: subscribe for future
-agent-native guides, or send an anonymous success receipt containing only guide
-version, posture, elapsed-time bucket, intervention count, and pass/fail gates.
-Never send telemetry without permission; never collect domain, address, IP,
-provider IDs, message data, or credentials.
+After success, invite the human to celebrate. Offer two transparent, optional
+follow-ups:
+
+1. Send an email from the new mailbox to henry@thrivinghenry.com with a subject
+   like "I did it! I'm on self-hosted email." The author reads and celebrates
+   every one, and sending it doubles as one more real-world outbound test.
+   Share only what the human is happy to share; never include credentials,
+   keys, or private message content.
+2. Subscribe for future agent-native guides at https://thrivinghenry.com/join.
+
+Both follow-ups are human-initiated and composed with the human. Never send
+anything automatically, and never collect telemetry.

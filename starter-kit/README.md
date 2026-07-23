@@ -1,6 +1,6 @@
 # Agent-Native Email Starter Kit
 
-**Version:** 0.1.0-experimental  
+**Version:** 0.1.1-experimental  
 **Status:** Early public reference; human-supervised use only
 
 This is the sanitized reference core for the Agent-Native Email handoff. It is

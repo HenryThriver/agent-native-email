@@ -111,7 +111,7 @@ set -e
 [ "$DNSBL_STATUS" -eq 1 ] || fail "listed fixture was not listed"
 
 "$ROOT/scripts/init-ledger.sh" fresh "$SCRATCH/ledger.json" >/dev/null
-jq -e '.guide_version=="0.1.0-experimental" and .mode=="fresh" and (.phases|length)==8' "$SCRATCH/ledger.json" >/dev/null || fail "ledger schema invalid"
+jq -e '.guide_version=="0.1.1-experimental" and .mode=="fresh" and (.phases|length)==8' "$SCRATCH/ledger.json" >/dev/null || fail "ledger schema invalid"
 printf '%s\n' 'privacy-safe receipt' > "$SCRATCH/preflight.txt"
 "$ROOT/scripts/record-phase.sh" preflight completed "$SCRATCH/preflight.txt" "$SCRATCH/ledger.json" >/dev/null
 jq -e '.phases[] | select(.key=="preflight") | .status=="completed" and (.receipts|length)==1' "$SCRATCH/ledger.json" >/dev/null || fail "phase receipt missing"
@@ -124,6 +124,8 @@ grep -q 'smtpd -n -f' "$ROOT/scripts/deploy.sh" || fail "staged smtp validation 
 grep -q 'rcctl check.*PHP_FPM' "$ROOT/scripts/deploy.sh" || fail "PHP-FPM readiness check missing"
 ! grep -q 'doas .*rcctl .*PHP_FPM' "$ROOT/scripts/deploy.sh" || fail "deploy requires ungranted dynamic PHP-FPM doas authority"
 grep -q 'chown -R _dkimsign /etc/mail/dkim' "$ROOT/scripts/deploy.sh" || fail "DKIM ownership reset missing"
+grep -q 'doas /usr/sbin/sshd -t' "$ROOT/scripts/deploy.sh" || fail "live sshd validation missing"
+grep -q 'cmd /usr/sbin/sshd args -t' "$ROOT/templates/etc/doas.conf.tmpl" || fail "sshd validation doas authority missing"
 grep -q '/etc/mail/secrets.new' "$ROOT/scripts/install-relay-secrets.sh" || fail "atomic relay temp path missing"
 grep -q 'shasum -a 256' "$ROOT/scripts/install-relay-secrets.sh" || fail "relay transport digest missing"
 
@@ -136,10 +138,13 @@ GENERAL_OWNER=$(line_of 'chown -R root:wheel' "$ROOT/scripts/deploy.sh")
 DKIM_OWNER=$(line_of 'chown -R _dkimsign' "$ROOT/scripts/deploy.sh")
 ALIAS_INSTALL=$(line_of 'aliases.merged.* /etc/mail/aliases.new' "$ROOT/scripts/deploy.sh")
 FINAL_SMTP=$(line_of 'doas /usr/sbin/smtpd -n$' "$ROOT/scripts/deploy.sh")
+SSH_COPY=$(line_of 'etc-staging/ssh/.* /etc/ssh/' "$ROOT/scripts/deploy.sh")
+SSHD_CHECK=$(line_of 'doas /usr/sbin/sshd -t' "$ROOT/scripts/deploy.sh")
 [ "$DOAS_CHECK" -lt "$DOAS_COPY" ] || fail "doas policy copied before validation"
 [ "$SMTP_STAGE" -lt "$MAIL_COPY" ] || fail "mail config copied before staged validation"
 [ "$DKIM_OWNER" -gt "$GENERAL_OWNER" ] || fail "DKIM ownership not restored after general ownership"
 [ "$ALIAS_INSTALL" -lt "$FINAL_SMTP" ] || fail "aliases installed after final SMTP validation"
+[ "$SSHD_CHECK" -gt "$SSH_COPY" ] || fail "sshd not validated after installing staged ssh config"
 
 mkdir -p "$SCRATCH/bin" "$SCRATCH/remote"
 cat > "$SCRATCH/bin/ssh" <<'EOF'
