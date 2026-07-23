@@ -69,6 +69,9 @@ do not block experimental publication.
 - [ ] Prompt-injection and agent-authority review
 - [ ] Beginner follows only the public guide and starter
 - [ ] Test the public launcher from a clean agent conversation
+      (partially satisfied 2026-07-22: two scripted Gate-A dry runs with a
+      simulated beginner passed at the cheapest model tier and drove the
+      v0.1.2 guide tightenings; a full-depth run remains open)
 
 Set `release_status: stable` only after these stable-v1 gates pass or are
 explicitly replaced by equally strong evidence.
