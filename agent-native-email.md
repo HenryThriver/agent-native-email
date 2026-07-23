@@ -4,8 +4,8 @@ version: 0.1.2-experimental
 release_status: experimental
 last_verified: 2026-07-22
 reference_target: macOS + Cloudflare + Vultr/OpenBSD + SMTP2GO + 1Password
-starter_source: https://github.com/HenryThriver/agent-native-email/releases/download/v0.1.1-experimental/agent-native-email-starter-kit-v0.1.1-experimental.tar.gz
-starter_checksum: sha256:3e17e9cae8f23f1ac2366c8bca8effdd74df2925450f851a35f4d4dcffeb1f51
+starter_source: https://github.com/HenryThriver/agent-native-email/releases/download/v0.1.2-experimental/agent-native-email-starter-kit-v0.1.2-experimental.tar.gz
+starter_checksum: sha256:abc2f6ba32e952a07f9eee7c49623d35cb2c6717669837a241ea4e0ef9e5dc85
 production_use: human-supervised-experimental
 ---
 

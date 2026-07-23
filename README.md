@@ -23,7 +23,7 @@ story and the why.
 Copy the prompt below into Claude Code, Codex, or any capable coding agent.
 
 > Help me build agent-native, self-hosted email. Read
-> https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.1-experimental/agent-native-email.md
+> https://raw.githubusercontent.com/HenryThriver/agent-native-email/v0.1.2-experimental/agent-native-email.md
 > and start in PREFLIGHT mode. This is an experimental guide. Do not change
 > anything, create paid resources, or ask me to paste secrets into chat until
 > you have inspected what you safely can and shown me the architecture, cost,
@@ -78,7 +78,7 @@ anything exists to pay for.
 
 ## Experimental, and honest about it
 
-This is `v0.1.1-experimental`. The architecture runs my real email every day,
+This is `v0.1.2-experimental`. The architecture runs my real email every day,
 and the starter passes its offline safety suite. What it hasn't had yet: a
 from-scratch replay by someone who isn't me.
 
