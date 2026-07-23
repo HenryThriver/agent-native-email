@@ -78,7 +78,7 @@ anything exists to pay for.
 
 ## Experimental, and honest about it
 
-This is `v0.1.0-experimental`. The architecture runs my real email every day,
+This is `v0.1.1-experimental`. The architecture runs my real email every day,
 and the starter passes its offline safety suite. What it hasn't had yet: a
 from-scratch replay by someone who isn't me.
 
