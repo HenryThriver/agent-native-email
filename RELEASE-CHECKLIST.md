@@ -23,7 +23,9 @@ Publishing early is allowed; overstating what is automated is not.
 
 - [x] Create public `HenryThriver/agent-native-email` repository
 - [x] Run public-tree and Git-history secret scans before first push
-- [x] Tag immutable `v0.1.0-experimental` and publish its archive checksum
+- [x] Tag immutable releases and publish archive checksums
+      (`v0.1.1-experimental` current; archives built from committed files via
+      `git archive`)
 - [x] Replace local starter source and pending checksum in the guide
 - [x] Host the versioned raw guide without JavaScript or authentication
 - [x] Fetch the public guide URL outside the signed-in website session and
