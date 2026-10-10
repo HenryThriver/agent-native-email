@@ -16,7 +16,10 @@ me. This repo is that handoff, packaged so your agent can do the same for you.
 It's one artifact of my [agent-native email quest](https://thrivinghenry.com/quests/agent-native-email),
 a build-in-public project at [ThrivingHenry](https://thrivinghenry.com). The
 [intro essay](https://thrivinghenry.com/writing/agent-native-email) has the
-story and the why.
+story and the why. The
+[practical handoff essay](https://thrivinghenry.com/writing/build-your-own-agent-native-email)
+explains what the system is, what experimental means, and why the agent is the
+installer.
 
 ## Just run this
 
